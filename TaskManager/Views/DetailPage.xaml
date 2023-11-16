@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="TaskManager.DetailPage"
+             xmlns:viewmodel="clr-namespace:TaskManager.ViewModel"
+             x:DataType="viewmodel:DetailViewModel"
+             Title="DetailPage">
+    <Grid RowDefinitions="100, Auto, 50"
+          ColumnDefinitions=".55*,.50*"
+          Padding="15"
+          RowSpacing="10"
+          ColumnSpacing="10">
+      
+            <Label 
+            Text="Title"
+            VerticalOptions="Center" 
+            HorizontalOptions="Start" 
+            Grid.Row="0"
+            Grid.Column="0"
+            FontSize="20"/>
+            <Label 
+            Text="{Binding TaskDetail.Title}"
+            VerticalOptions="Center" 
+            HorizontalOptions="Start" 
+            Grid.Row="0"
+            Grid.Column="1"
+            FontSize="16"/>
+            <Label 
+            Text="Descryption"
+            VerticalOptions="Center" 
+            HorizontalOptions="Start" 
+            Grid.Row="1"
+            Grid.Column="0"
+            FontSize="20"/>
+            <Label 
+            Text="{Binding TaskDetail.Description}"
+            VerticalOptions="Center" 
+            HorizontalOptions="Start" 
+            Grid.Row="1"
+            Grid.Column="1"
+            FontSize="16"/>
+        <Button Text="Back"
+                Command="{Binding GoBackCommand}"
+                Grid.Row="2"
+                Grid.ColumnSpan="2"
+                ></Button>
+    </Grid>
+</ContentPage>
