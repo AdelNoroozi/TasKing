@@ -21,24 +21,38 @@ namespace TaskManager.ViewModel
         [ICommand]
         public async void Add()
         {
-            var response = await _taskService.AddTask(new Models.TaskModel
+            if (Title != null || Description != null)
             {
-                Title = Title,
-                Description = Description
-            });
-            if (response > 0)
-            {
-                await Shell.Current.DisplayAlert("Record Added", "Record Added to Task Table", "ok");
+                var response = await _taskService.AddTask(new Models.TaskModel
+                {
+                    Title = Title,
+                    Description = Description
+                });
 
+                if (response > 0)
+                {
+                    await Shell.Current.DisplayAlert("Record Added", "Record Added to Task Table", "ok");
+
+                }
+                else
+                {
+                    await Shell.Current.DisplayAlert("Heads Up!", "Something went wrong while adding record", "ok");
+                }
+                GoBacktoMain();
             }
+
             else
             {
-                await Shell.Current.DisplayAlert("Heads Up!", "Something went wrong while adding record", "ok");
+                await Shell.Current.DisplayAlert("Hold Up!", "Title or Description is Empty!", "ok");
+
             }
+        }
+        
+        public async void GoBacktoMain()
+        {
             TaskService taskService = new TaskService();
             var mainViewModel = new MainViewModel(taskService);
             await Shell.Current.Navigation.PushAsync(new MainPage(mainViewModel));
-
         }
     }
 }

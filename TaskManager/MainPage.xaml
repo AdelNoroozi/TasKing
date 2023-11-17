@@ -5,7 +5,9 @@
              xmlns:models="clr-namespace:TaskManager.Models"
              xmlns:viewmodel="clr-namespace:TaskManager.ViewModel"
              x:DataType="viewmodel:MainViewModel"
-             Title="Home">
+             Title="Home"
+             NavigationPage.HasBackButton="False"
+             >
 
     <Grid RowDefinitions="100, Auto, *"
           ColumnDefinitions=".75*,.25*"

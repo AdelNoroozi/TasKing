@@ -2,7 +2,10 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="TaskManager.Views.AddPage"
-             Title="AddPage">
+             Title="AddPage"
+             NavigationPage.HasBackButton="False"
+             
+             >
     <ContentPage.Resources>
         <ResourceDictionary>
             <Style TargetType="Label">
@@ -22,6 +25,8 @@
              <Entry Text="{Binding Description}" Placeholder="Description" />
         </VerticalStackLayout>
 
-        <Button Text="save" Command="{Binding AddCommand}" ></Button>
+        <Button Text="Save" Command="{Binding AddCommand}" />
+     
+        <!--<Button Text="Back" Command="{Binding GoBacktoMainCommand}" />-->
     </StackLayout>
 </ContentPage>

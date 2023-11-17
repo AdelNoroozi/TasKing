@@ -4,7 +4,9 @@
              x:Class="TaskManager.DetailPage"
              xmlns:viewmodel="clr-namespace:TaskManager.ViewModel"
              x:DataType="viewmodel:DetailViewModel"
-             Title="DetailPage">
+             Title="DetailPage"
+             NavigationPage.HasBackButton="False"
+             >
 
 
     <AbsoluteLayout Margin="20">
