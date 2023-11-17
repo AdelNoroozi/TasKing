@@ -28,6 +28,11 @@
                 Grid.Row="1"
                 Grid.Column="1"
                 />
+        <ActivityIndicator
+            IsRunning="{Binding IsLoading}"
+            Grid.Row="2"
+            Grid.ColumnSpan="2"
+            />
         <CollectionView Grid.Row="2"
                         Grid.ColumnSpan="2"
                         ItemsSource="{Binding Tasks}"
@@ -53,7 +58,8 @@
                                         />
                                 </Frame.GestureRecognizers>
                                 <Label Text="{Binding Title}"
-                                   FontSize="16"></Label>
+                                       FontSize="16">
+                                </Label>
                             </Frame>
                         </Grid>
                     </SwipeView>

@@ -16,21 +16,27 @@ namespace TaskManager.ViewModel
         {
             _taskService=taskService;
         }
-
+        [ObservableProperty]
+        private bool isLoading;
+  
+        
         [ICommand]
         public async void GetTaskList()
-        {  
-            Tasks.Clear();
+        {    
+            IsLoading = true;
 
-            var taskList=await _taskService.GetTaskList();
-            if(taskList?.Count>0)
+            Tasks.Clear();
+            await Task.Delay(2000);
+            var taskList = await _taskService.GetTaskList();
+            if (taskList?.Count > 0)
             {
-              
-                foreach(var task in taskList)
+                foreach (var task in taskList)
                 {
                     Tasks.Add(task);
                 }
             }
+            IsLoading = false;
+            
         }
 
       
