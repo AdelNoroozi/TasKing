@@ -5,44 +5,43 @@
              xmlns:viewmodel="clr-namespace:TaskManager.ViewModel"
              x:DataType="viewmodel:DetailViewModel"
              Title="DetailPage">
-    <Grid RowDefinitions="100, Auto, 50"
-          ColumnDefinitions=".55*,.50*"
-          Padding="15"
-          RowSpacing="10"
-          ColumnSpacing="10">
-      
-            <Label 
-            Text="Title"
-            VerticalOptions="Center" 
-            HorizontalOptions="Start" 
-            Grid.Row="0"
-            Grid.Column="0"
-            FontSize="20"/>
-            <Label 
-            Text="{Binding TaskDetail.Title}"
-            VerticalOptions="Center" 
-            HorizontalOptions="Start" 
-            Grid.Row="0"
-            Grid.Column="1"
-            FontSize="16"/>
-            <Label 
-            Text="Descryption"
-            VerticalOptions="Center" 
-            HorizontalOptions="Start" 
-            Grid.Row="1"
-            Grid.Column="0"
-            FontSize="20"/>
-            <Label 
-            Text="{Binding TaskDetail.Description}"
-            VerticalOptions="Center" 
-            HorizontalOptions="Start" 
-            Grid.Row="1"
-            Grid.Column="1"
-            FontSize="16"/>
-        <Button Text="Back"
-                Command="{Binding GoBackCommand}"
-                Grid.Row="2"
-                Grid.ColumnSpan="2"
-                ></Button>
-    </Grid>
+
+
+    <AbsoluteLayout Margin="20">
+        <Label Text="Task Detail"   
+               FontSize="25" 
+               AbsoluteLayout.LayoutFlags="PositionProportional"
+               AbsoluteLayout.LayoutBounds="0, 0, 200, 30"
+               />
+        <Button Text="Back"   
+               FontSize="15" 
+               AbsoluteLayout.LayoutFlags="PositionProportional"
+               AbsoluteLayout.LayoutBounds="1, 0, 80, 40"
+               Command="{Binding GoBackCommand}"
+               />
+        <Label Text="Title:" 
+               TextColor="LightBlue"
+               FontSize="20" 
+               AbsoluteLayout.LayoutFlags="PositionProportional"
+               AbsoluteLayout.LayoutBounds="0.1, 0.2, 300, 30"
+               />
+        <Label Text="{Binding TaskDetail.Title}"   
+               FontSize="20" 
+               AbsoluteLayout.LayoutFlags="PositionProportional"
+               AbsoluteLayout.LayoutBounds="0.2, 0.3, 300, 30"
+               />
+        <Label Text="Descryption:"   
+               TextColor="LightBlue"
+               FontSize="20" 
+               AbsoluteLayout.LayoutFlags="PositionProportional"
+               AbsoluteLayout.LayoutBounds="0.1, 0.4, 300, 30"
+               />
+        <Label Text="{Binding TaskDetail.Description}"   
+               FontSize="20" 
+               AbsoluteLayout.LayoutFlags="PositionProportional"
+               AbsoluteLayout.LayoutBounds="0.2, 0.5, 300, 30"
+               />
+        
+
+    </AbsoluteLayout>
 </ContentPage>
