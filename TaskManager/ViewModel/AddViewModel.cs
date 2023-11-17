@@ -29,21 +29,15 @@ namespace TaskManager.ViewModel
             if (response > 0)
             {
                 await Shell.Current.DisplayAlert("Record Added", "Record Added to Task Table", "ok");
-                try
-                {
-                    await Shell.Current.GoToAsync("..");
-                }
-                catch
-                {
-
-                }
 
             }
             else
             {
                 await Shell.Current.DisplayAlert("Heads Up!", "Something went wrong while adding record", "ok");
-                await Shell.Current.GoToAsync("..");
             }
+            TaskService taskService = new TaskService();
+            var mainViewModel = new MainViewModel(taskService);
+            await Shell.Current.Navigation.PushAsync(new MainPage(mainViewModel));
 
         }
     }
