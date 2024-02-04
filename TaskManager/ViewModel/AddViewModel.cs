@@ -38,7 +38,7 @@ namespace TaskManager.ViewModel
                 {
                     await Shell.Current.DisplayAlert("Heads Up!", "Something went wrong while adding record", "ok");
                 }
-                GoBacktoMain();
+                GoBack();
             }
 
             else
@@ -47,8 +47,8 @@ namespace TaskManager.ViewModel
 
             }
         }
-        
-        public async void GoBacktoMain()
+        [ICommand]
+        public async void GoBack()
         {
             TaskService taskService = new TaskService();
             var mainViewModel = new MainViewModel(taskService);
