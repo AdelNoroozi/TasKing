@@ -26,7 +26,7 @@ namespace TaskManager.ViewModel
             IsLoading = true;
 
             Tasks.Clear();
-            await Task.Delay(2000);
+            await Task.Delay(1);
             var taskList = await _taskService.GetTaskList();
             if (taskList?.Count > 0)
             {
@@ -51,10 +51,17 @@ namespace TaskManager.ViewModel
         {
             if (Tasks.Contains(task))
             {
-                var taskList = await _taskService.DeleteTask(task);
+                // var taskList = await _taskService.DeleteTask(task);
+                await _taskService.MakeTaskVisibleOrInvisible(task.TaskId, false);
                 Tasks.Remove(task);
             }
            
+        }      
+        [ICommand]
+        async void GoToRecycleBin()
+        {
+            await Shell.Current.GoToAsync($"{nameof(RecycleBinPage)}");
+
         }
 
 
@@ -77,6 +84,5 @@ namespace TaskManager.ViewModel
             // Use PushModalAsync instead of GoToAsync
             await Application.Current.MainPage.Navigation.PushModalAsync(new DetailPage(detailViewModel));
         }
-
     }
 }

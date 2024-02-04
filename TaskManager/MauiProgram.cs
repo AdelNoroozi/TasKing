@@ -30,6 +30,9 @@ namespace TaskManager
 
             builder.Services.AddTransient<AddPage>();
             builder.Services.AddTransient<AddViewModel>();
+                       
+            builder.Services.AddTransient<RecycleBinPage>();
+            builder.Services.AddTransient<RecycleBinViewModel>();
 
             builder.Services.AddSingleton<ITaskService, TaskService>();
 
