@@ -8,6 +8,7 @@ namespace TaskManager
         {
             InitializeComponent();
             Routing.RegisterRoute(nameof(DetailPage), typeof(DetailPage));
-            Routing.RegisterRoute(nameof(AddPage), typeof(AddPage));        }
+            Routing.RegisterRoute(nameof(AddPage), typeof(AddPage));        
+            Routing.RegisterRoute(nameof(RecycleBinPage), typeof(RecycleBinPage));        }
     }
 }

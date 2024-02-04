@@ -13,6 +13,15 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
+
+        <Button Grid.Row="0"
+            Text="Recycle Bin"
+            BackgroundColor="#3498db"
+            TextColor="#ffffff"
+            CornerRadius="0"
+            Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:MainViewModel}}, Path=GoToRecycleBinCommand}"
+            FontSize="18"
+            HorizontalOptions="Start" />
         
         <Label FontSize="36" TextColor="#ffffff" VerticalOptions="Center" HorizontalOptions="CenterAndExpand">TasKing</Label>
      
@@ -39,7 +48,7 @@
                                     </StackLayout>
 
                                     <Grid ColumnDefinitions="*, Auto" ColumnSpacing="15">
-                                        <ImageButton Grid.Column="1" Source="delete_icon.png" CornerRadius="0" Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:MainViewModel}}, Path=DeleteCommand}" CommandParameter="{Binding .}" HorizontalOptions="End" VerticalOptions="Center"/>
+                                        <ImageButton Grid.Column="1" Source="Recycle_bin_icon.png" CornerRadius="0" Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:MainViewModel}}, Path=MoveToRecycleBinCommand}" CommandParameter="{Binding .}" HorizontalOptions="End" VerticalOptions="Center"/>
                                     </Grid>
                                 </Grid>
                             </Frame>
