@@ -1,4 +1,5 @@
 using System.Collections.ObjectModel;
+using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using TaskManager.Models;
@@ -45,6 +46,16 @@ namespace TaskManager.ViewModel
                 }
             }
             IsLoading = false;
+        }
+        [ICommand]
+        async void Restore(TaskModel task)
+        {
+            if (DeletedTasks.Contains(task))
+            {
+                await _taskService.MakeTaskVisibleOrInvisible(task.TaskId, true);
+                DeletedTasks.Remove(task);
+            }
+
         }
 
         [ICommand]

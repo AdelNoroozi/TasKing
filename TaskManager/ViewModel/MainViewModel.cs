@@ -47,7 +47,7 @@ namespace TaskManager.ViewModel
         }
 
         [ICommand]
-        async void Delete(TaskModel task)
+        async void MoveToRecycleBin(TaskModel task)
         {
             if (Tasks.Contains(task))
             {
