@@ -6,68 +6,47 @@
              xmlns:viewmodel="clr-namespace:TaskManager.ViewModel"
              x:DataType="viewmodel:MainViewModel"
              Title="Home"
-             NavigationPage.HasBackButton="False"
-             >
+             NavigationPage.HasBackButton="False">
 
-    <Grid RowDefinitions="100, Auto, *"
-          ColumnDefinitions=".75*,.25*"
-          Padding="10"
-          RowSpacing="10"
-          ColumnSpacing="10">
-        <Image Grid.ColumnSpan="2"
-               Source="logo.png"
-               BackgroundColor="Transparent"
-               ></Image>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        
+        <Label FontSize="36" TextColor="#ffffff" VerticalOptions="Center" HorizontalOptions="CenterAndExpand">TasKing</Label>
+     
+        <Button Grid.Row="0"
+                Text="Add New"
+                BackgroundColor="#3498db"
+                TextColor="#ffffff"
+                CornerRadius="0"
+                Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:MainViewModel}}, Path=AddCommand}"
+                FontSize="18"
+                HorizontalOptions="End" />
 
-        <Label Grid.Row="1"
-               Grid.Column="0"
-               FontSize="24"
-               VerticalOptions="Center"
-               >Task list</Label>
-        <Button Text="Add" 
-                Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:MainViewModel}},Path=AddCommand}"
-                FontSize="16"
-                Grid.Row="1"
-                Grid.Column="1"
-                />
-        <ActivityIndicator
-            IsRunning="{Binding IsLoading}"
-            Grid.Row="2"
-            Grid.ColumnSpan="2"
-            />
-        <CollectionView Grid.Row="2"
-                        Grid.ColumnSpan="2"
-                        ItemsSource="{Binding Tasks}"
-                        SelectionMode="None">
-            <CollectionView.ItemTemplate>
-                <DataTemplate x:DataType="models:TaskModel">
-                    <SwipeView>
-                        <SwipeView.RightItems>
-                            <SwipeItems>
-                                <SwipeItem Text="Delete"
-                                           BackgroundColor="Red"
-                                           Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:MainViewModel}},Path=DeleteCommand}"
-                                           CommandParameter="{Binding .}"
-                                           ></SwipeItem>
-                            </SwipeItems>
-                        </SwipeView.RightItems>
-                        <Grid Padding="3">
-                            <Frame>
-                                <Frame.GestureRecognizers>
-                                    <TapGestureRecognizer
-                                              Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:MainViewModel}},Path=TapCommand}"
-                                              CommandParameter="{Binding .}"
-                                        />
-                                </Frame.GestureRecognizers>
-                                <Label Text="{Binding Title}"
-                                       FontSize="16">
-                                </Label>
+        <StackLayout Grid.Row="1" Padding="20" Spacing="15">
+     
+
+            <CollectionView ItemsSource="{Binding Tasks}" SelectionMode="None" BackgroundColor="Transparent">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="models:TaskModel">
+                        <SwipeView>
+                            <Frame Padding="15" BackgroundColor="#2c2c2c" CornerRadius="0" HasShadow="True">
+                                <Grid>
+                                    <StackLayout Spacing="10">
+                                        <Label Text="{Binding Title}" FontSize="24" TextColor="#ffffff"/>
+                                    </StackLayout>
+
+                                    <Grid ColumnDefinitions="*, Auto" ColumnSpacing="15">
+                                        <ImageButton Grid.Column="1" Source="delete_icon.png" CornerRadius="0" Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:MainViewModel}}, Path=DeleteCommand}" CommandParameter="{Binding .}" HorizontalOptions="End" VerticalOptions="Center"/>
+                                    </Grid>
+                                </Grid>
                             </Frame>
-                        </Grid>
-                    </SwipeView>
-                </DataTemplate>
-            </CollectionView.ItemTemplate>
-        </CollectionView>
+                        </SwipeView>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </StackLayout>
     </Grid>
-
 </ContentPage>
