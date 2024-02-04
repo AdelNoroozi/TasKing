@@ -38,6 +38,12 @@
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>
+            <Button Text="Back"   
+               FontSize="15" 
+               AbsoluteLayout.LayoutFlags="PositionProportional"
+               AbsoluteLayout.LayoutBounds="1, 0, 80, 40"
+               Command="{Binding GoBackCommand}"
+               />
         </StackLayout>
     </Grid>
 </ContentPage>

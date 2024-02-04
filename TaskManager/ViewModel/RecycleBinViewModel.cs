@@ -46,5 +46,13 @@ namespace TaskManager.ViewModel
             }
             IsLoading = false;
         }
+
+        [ICommand]
+        public async void GoBack()
+        {
+            TaskService taskService = new TaskService();
+            var mainViewModel = new MainViewModel(taskService);
+            await Shell.Current.Navigation.PushAsync(new MainPage(mainViewModel));
+        }
     }
 }
