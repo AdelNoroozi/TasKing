@@ -26,9 +26,9 @@
                             <Frame Padding="15" BackgroundColor="#2c2c2c" CornerRadius="0" HasShadow="True">
                                 <Grid RowDefinitions="Auto" ColumnDefinitions="*,Auto,Auto" ColumnSpacing="10" >
                                     <Label Grid.Row="0" Grid.Column="0" Text="{Binding Title}" FontSize="24" TextColor="#ffffff"/>
-                                    <ImageButton Grid.Row="0" WidthRequest="50" HeightRequest="50" Grid.Column="1" Source="delete_icon.png"  Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:RecycleBinViewModel}}, Path=DeleteCommand}" CommandParameter="{Binding .}" />
-                                    <ImageButton Grid.Row="0" WidthRequest="50" HeightRequest="50" Grid.Column="2" Source="restore_icon.png"  Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:RecycleBinViewModel}}, Path=RestoreCommand}" CommandParameter="{Binding .}" />
-                                </Grid>
+                                <ImageButton Grid.Row="0" WidthRequest="50" HeightRequest="50" Grid.Column="1" Source="delete_icon.png" Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:RecycleBinViewModel}}, Path=DeleteCommand}" CommandParameter="{Binding .}" />
+                                <ImageButton Grid.Row="0" WidthRequest="50" HeightRequest="50" Grid.Column="2" Source="restore_icon.png" Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:RecycleBinViewModel}}, Path=RestoreCommand}" CommandParameter="{Binding .}" />
+                            </Grid>
                             </Frame>
                     
                     </DataTemplate>
