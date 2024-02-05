@@ -50,11 +50,6 @@
                             </SwipeView.RightItems>
 
                             <Frame Padding="15" BackgroundColor="#2c2c2c" CornerRadius="0">
-                                <!--<Frame.GestureRecognizers>
-                                    <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:MainViewModel}}, Path=TapCommand}"
-                                                          CommandParameter="{Binding .}" />
-                                </Frame.GestureRecognizers>-->
-
                                 <Grid ColumnSpacing="15">
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="Auto" />
@@ -78,24 +73,24 @@
                                             <ColumnDefinition Width="Auto"></ColumnDefinition>
                                         </Grid.ColumnDefinitions>
                                         <Label Text="Status:" FontSize="20" Grid.Column="0" Grid.Row="0" HorizontalOptions="Center" VerticalOptions="Center"></Label>
-                                    <Picker     Grid.Column="1"
-                                                Grid.Row="0"
-                                                WidthRequest="150"
-                                                HeightRequest="50"
-                                                SelectedItem="{Binding Status}"
-                                                BackgroundColor="#3498db"
-                                                TextColor="#ffffff"
-                                                FontSize="16"
-                                                HorizontalOptions="CenterAndExpand" >
-                                        <Picker.ItemsSource>
-                                            <x:Array Type="{x:Type x:String}">
-                                                <x:String>todo</x:String>
-                                                <x:String>inprogress</x:String>
-                                                <x:String>done</x:String>
-                                            </x:Array>
-                                        </Picker.ItemsSource>
+                                        <Picker    
+                                            x:Name="myPicker"
+                                            Grid.Column="1"
+                                            Grid.Row="0"
+                                            WidthRequest="150"
+                                            HeightRequest="50"
+                                            BackgroundColor="#3498db"
+                                            TextColor="#ffffff"
+                                            FontSize="16"
+                                            HorizontalOptions="CenterAndExpand"
+                                            ItemsSource="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:MainViewModel}}, Path=myList}"
+                                            SelectedItem="{Binding SelectedStatus, Source={RelativeSource AncestorType={x:Type viewmodel:MainViewModel}}}"
+                                            SelectedIndexChanged="OnPickerSelectedIndexChanged"
+                                            >
+                                            
                                         </Picker>
-                                </Grid>
+                                       
+                                    </Grid>
                                     <Button Grid.Column="3" Text="detail" WidthRequest="100" HeightRequest="50" Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:MainViewModel}}, Path=TapCommand}"
                                                           CommandParameter="{Binding .}"></Button>
                

@@ -1,28 +1,53 @@
 ﻿using System.Collections.ObjectModel;
+using System.ComponentModel;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using TaskManager.Models;
 using TaskManager.Services;
 using TaskManager.Views;
+using TaskStatus = TaskManager.Models.TaskStatus;
 
 namespace TaskManager.ViewModel
 {
     public partial class MainViewModel : ObservableObject
     {
-        public ObservableCollection<TaskModel> Tasks { get; set; }=new ObservableCollection<TaskModel>();
+        public ObservableCollection<TaskModel> Tasks { get; set; } = new ObservableCollection<TaskModel>();
 
         private readonly ITaskService _taskService;
         public MainViewModel(ITaskService taskService)
         {
-            _taskService=taskService;
+            _taskService = taskService;
+            GetList();
         }
+        public List<Models.TaskStatus> myList
+        {
+            get;
+            set;
+        }
+        public void GetList()
+        {
+            myList = new List<TaskStatus>();
+            myList.Add(TaskStatus.Todo);
+            myList.Add(TaskStatus.InProgress);
+            myList.Add(TaskStatus.Done);
+        }
+
+        private TaskStatus _selectedStatus;
+        public TaskStatus SelectedStatus
+        {
+            get { return _selectedStatus; }
+            set
+            {
+            }
+        }
+
         [ObservableProperty]
         private bool isLoading;
-  
-        
+
+
         [ICommand]
         public async void GetTaskList()
-        {    
+        {
             IsLoading = true;
 
             Tasks.Clear();
@@ -36,10 +61,10 @@ namespace TaskManager.ViewModel
                 }
             }
             IsLoading = false;
-            
+
         }
 
-      
+
         [ICommand]
         public async void Add()
         {
@@ -55,8 +80,8 @@ namespace TaskManager.ViewModel
                 await _taskService.MakeTaskVisibleOrInvisible(task.TaskId, false);
                 Tasks.Remove(task);
             }
-           
-        }      
+
+        }
         [ICommand]
         async void GoToRecycleBin()
         {
@@ -64,6 +89,10 @@ namespace TaskManager.ViewModel
 
         }
 
+        void OnPickerSelectedIndexChanged(object sender, EventArgs e)
+        {
+            
+        }
 
         [ICommand]
         async Task Tap(TaskModel task)
