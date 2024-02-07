@@ -34,6 +34,9 @@ namespace TaskManager
             builder.Services.AddTransient<RecycleBinPage>();
             builder.Services.AddTransient<RecycleBinViewModel>();
 
+            builder.Services.AddTransient<LockerPage>();
+            builder.Services.AddTransient<LockerViewModel>();
+
             builder.Services.AddSingleton<ITaskService, TaskService>();
 
             return builder.Build();

@@ -63,6 +63,12 @@ namespace TaskManager.ViewModel
             await Shell.Current.GoToAsync($"{nameof(RecycleBinPage)}");
 
         }
+        [ICommand]
+        async void GoToLocker()
+        {
+            await Shell.Current.GoToAsync($"{nameof(LockerPage)}");
+
+        }
 
 
         [ICommand]
