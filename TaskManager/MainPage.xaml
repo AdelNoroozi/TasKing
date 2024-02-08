@@ -6,12 +6,14 @@
              xmlns:viewmodel="clr-namespace:TaskManager.ViewModel"
              x:DataType="viewmodel:MainViewModel"
              Title="Home"
-             NavigationPage.HasBackButton="False">
+             NavigationPage.HasBackButton="False"
+             >
 
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
         <Button Grid.Row="0"
@@ -33,73 +35,65 @@
                 Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:MainViewModel}}, Path=AddCommand}"
                 FontSize="18"
                 HorizontalOptions="End" />
+        <ScrollView Grid.Row="1">
+            <StackLayout Grid.Row="1" Padding="20" Spacing="15">
 
-        <StackLayout Grid.Row="1" Padding="20" Spacing="15">
+                <CollectionView ItemsSource="{Binding Tasks}" SelectionMode="None" BackgroundColor="Transparent">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="models:TaskModel">
+                            <SwipeView>
+                                <SwipeView.RightItems>
+                                    <SwipeItems>
+                                        <SwipeItem Text="Delete"
+                                                   BackgroundColor="#e74c3c"
+                                                   Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:MainViewModel}}, Path=MoveToRecycleBinCommand}"
+                                                   CommandParameter="{Binding .}" />
+                                    </SwipeItems>
+                                </SwipeView.RightItems>
 
-            <CollectionView ItemsSource="{Binding Tasks}" SelectionMode="None" BackgroundColor="Transparent">
-                <CollectionView.ItemTemplate>
-                    <DataTemplate x:DataType="models:TaskModel">
-                        <SwipeView>
-                            <SwipeView.RightItems>
-                                <SwipeItems>
-                                    <SwipeItem Text="Delete"
-                                               BackgroundColor="#e74c3c"
-                                               Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:MainViewModel}}, Path=MoveToRecycleBinCommand}"
-                                               CommandParameter="{Binding .}" />
-                                </SwipeItems>
-                            </SwipeView.RightItems>
-
-                            <Frame Padding="15" BackgroundColor="#2c2c2c" CornerRadius="0">
-                                <Grid ColumnSpacing="15">
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="Auto" />
-                                    </Grid.RowDefinitions>
-
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="*" />
-                                        <ColumnDefinition Width="Auto" />
-                                        <ColumnDefinition Width="Auto" />
-                                        <ColumnDefinition Width="Auto"/>
-                                    </Grid.ColumnDefinitions>
-    
-                                        <Label Grid.Row="0" Grid.Column="0" Text="{Binding Title}" FontSize="24" TextColor="#ffffff"/>
-                                        <ImageButton HeightRequest="50" WidthRequest="50" Grid.Row="0" Grid.Column="2" Source="Recycle_bin_icon.png" CornerRadius="0" Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:MainViewModel}}, Path=MoveToRecycleBinCommand}" CommandParameter="{Binding .}" HorizontalOptions="End" VerticalOptions="Center"/>
-                                    <Grid Grid.Column="1" Grid.Row="0" ColumnSpacing="5">
+                                <Frame Padding="15" BackgroundColor="#2c2c2c" CornerRadius="0">
+                                    <Grid ColumnSpacing="15">
                                         <Grid.RowDefinitions>
-                                            <RowDefinition Height="Auto"></RowDefinition>
+                                            <RowDefinition Height="Auto" />
                                         </Grid.RowDefinitions>
+
                                         <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="Auto"></ColumnDefinition>
-                                            <ColumnDefinition Width="Auto"></ColumnDefinition>
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition Width="Auto"/>
+                                            <ColumnDefinition Width="Auto"/>
                                         </Grid.ColumnDefinitions>
-                                        <Label Text="Status:" FontSize="20" Grid.Column="0" Grid.Row="0" HorizontalOptions="Center" VerticalOptions="Center"></Label>
-                                        <Picker    
-                                            x:Name="myPicker"
-                                            Grid.Column="1"
-                                            Grid.Row="0"
-                                            WidthRequest="150"
-                                            HeightRequest="50"
-                                            BackgroundColor="#3498db"
-                                            TextColor="#ffffff"
-                                            FontSize="16"
-                                            HorizontalOptions="CenterAndExpand"
-                                            ItemsSource="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:MainViewModel}}, Path=myList}"
-                                            SelectedItem="{Binding SelectedStatus, Source={RelativeSource AncestorType={x:Type viewmodel:MainViewModel}}}"
-                                            SelectedIndexChanged="OnPickerSelectedIndexChanged"
-                                            >
-                                            
-                                        </Picker>
-                                       
+
+                                        <Label Grid.Row="0" Grid.Column="0" Text="{Binding Title}" FontSize="24" TextColor="#ffffff"/>
+                                        <ImageButton HeightRequest="50" WidthRequest="50" Grid.Row="0" Grid.Column="3" Source="Recycle_bin_icon.png" CornerRadius="0" Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:MainViewModel}}, Path=MoveToRecycleBinCommand}" CommandParameter="{Binding .}" VerticalOptions="Center"/>
+                                        <Grid Grid.Column="1" Grid.Row="0" ColumnSpacing="5">
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="*"></RowDefinition>
+                                            </Grid.RowDefinitions>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="Auto"></ColumnDefinition>
+                                                <ColumnDefinition Width="Auto"></ColumnDefinition>
+                                            </Grid.ColumnDefinitions>
+                                            <Label Text="Status:" FontSize="20" Grid.Column="0" Grid.Row="0" VerticalOptions="Center" HorizontalOptions="Center"></Label>
+                                            <Label Text="{Binding Status}" FontSize="20" Grid.Column="1" Grid.Row="0" VerticalOptions="Center" HorizontalOptions="Center"></Label>
+                                        </Grid>
+                                        <ImageButton HeightRequest="50" WidthRequest="50" Grid.Row="0" Grid.Column="2" Source="change_status_icon.png" CornerRadius="0" Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:MainViewModel}}, Path=ChangeStatusCommand}" CommandParameter="{Binding .}" />
+                                        <Button Grid.Column="4" Text="detail" WidthRequest="100" HeightRequest="50" Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:MainViewModel}}, Path=TapCommand}" CommandParameter="{Binding .}"></Button>
+
                                     </Grid>
-                                    <Button Grid.Column="3" Text="detail" WidthRequest="100" HeightRequest="50" Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:MainViewModel}}, Path=TapCommand}"
-                                                          CommandParameter="{Binding .}"></Button>
-               
-                                </Grid>
-                            </Frame>
-                        </SwipeView>
-                    </DataTemplate>
-                </CollectionView.ItemTemplate>
-            </CollectionView>
+                                </Frame>
+                            </SwipeView>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </StackLayout>
+        </ScrollView>
+        <StackLayout Grid.Row="2" Padding="20" Orientation="Horizontal" VerticalOptions="End" HorizontalOptions="FillAndExpand" BackgroundColor="#000000">
+            <Label Text="Filter" FontSize="18" TextColor="#ffffff" VerticalOptions="Center" HorizontalOptions="Start" />
+            <Button Text="To Do" BackgroundColor="#3498db" TextColor="#ffffff" CornerRadius="5" Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:MainViewModel}}, Path=ToDoFilterCommand}" FontSize="16" Margin="5,0,5,0" HeightRequest="50" />
+            <Button Text="In Progress" BackgroundColor="#3498db" TextColor="#ffffff" CornerRadius="5" Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:MainViewModel}}, Path=InProgressFilterCommand}" FontSize="16" Margin="5,0,5,0" />
+            <Button Text="Done" BackgroundColor="#3498db" TextColor="#ffffff" CornerRadius="5" Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:MainViewModel}}, Path=DoneFilterCommand}" FontSize="16" Margin="5,0,5,0" />
         </StackLayout>
     </Grid>
 </ContentPage>

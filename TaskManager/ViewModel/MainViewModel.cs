@@ -5,7 +5,6 @@ using CommunityToolkit.Mvvm.Input;
 using TaskManager.Models;
 using TaskManager.Services;
 using TaskManager.Views;
-using TaskStatus = TaskManager.Models.TaskStatus;
 
 namespace TaskManager.ViewModel
 {
@@ -17,19 +16,6 @@ namespace TaskManager.ViewModel
         public MainViewModel(ITaskService taskService)
         {
             _taskService = taskService;
-            GetList();
-        }
-        public List<Models.TaskStatus> myList
-        {
-            get;
-            set;
-        }
-        public void GetList()
-        {
-            myList = new List<TaskStatus>();
-            myList.Add(TaskStatus.Todo);
-            myList.Add(TaskStatus.InProgress);
-            myList.Add(TaskStatus.Done);
         }
 
         private TaskStatus _selectedStatus;
@@ -82,16 +68,40 @@ namespace TaskManager.ViewModel
             }
 
         }
+
+        [ICommand]
+        async void ChangeStatus(TaskModel task)
+        {
+            if (Tasks.Contains(task))
+            {
+                string currentStatus = task.Status;
+
+                switch (currentStatus)
+                {
+                    case "To Do":
+                        await _taskService.UpdateTaskStatus(task.TaskId, "In Progress");
+                        break;
+
+                    case "In Progress":
+                        await _taskService.UpdateTaskStatus(task.TaskId, "Done");
+                        break;
+
+                    case "Done":
+                        await _taskService.UpdateTaskStatus(task.TaskId, "To Do");
+                        break;
+                }
+                TaskService taskService = new TaskService();
+                var mainViewModel = new MainViewModel(taskService);
+                await Shell.Current.Navigation.PushAsync(new MainPage(mainViewModel));
+            }
+        }
+
+
         [ICommand]
         async void GoToRecycleBin()
         {
             await Shell.Current.GoToAsync($"{nameof(RecycleBinPage)}");
 
-        }
-
-        void OnPickerSelectedIndexChanged(object sender, EventArgs e)
-        {
-            
         }
 
         [ICommand]
