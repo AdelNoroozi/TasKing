@@ -2,30 +2,47 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="TaskManager.Views.LockerPage"
+             
+             xmlns:models="clr-namespace:TaskManager.Models"
+             xmlns:viewmodel="clr-namespace:TaskManager.ViewModel"
+             x:DataType="viewmodel:LockerViewModel"
              Title="LockerPage">
     <VerticalStackLayout>
 
-        <!-- Login form -->
-        <StackLayout x:Name="loginForm" IsVisible="False">
-            <Entry Placeholder="Username"/>
+        <!-- Login password -->
+        <StackLayout x:Name="loginForm" IsVisible="{Binding IsLoggingIn}" Spacing="20">
+            <Label Text="Enter Your Password to Unlock" FontSize="30" HorizontalOptions="Center"/>
             <Entry Placeholder="Password" IsPassword="True"/>
-            <Button Text="Login"/>
-        </StackLayout>
 
-        <!-- Register form -->
-        <StackLayout x:Name="registerForm" IsVisible="{Binding IsRegister}">
-            <Entry Placeholder="Username"/>
-            <Entry Placeholder="Password" IsPassword="True"/>
-            <Entry Placeholder="Repeat Password" IsPassword="True"/>
-            <Button Text="Register"/>
+            <Label Text="Register">
+                <Label.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding SwitchCommand}" />
+                </Label.GestureRecognizers>
+            </Label>
+            <Label Text="{Binding ErrorMessage}" TextColor="Red"/>
+            
+            <Button Text="Login" Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:LockerViewModel}}, Path=SubmitCommand}" CommandParameter="{Binding .}"  />
         </StackLayout>
-        
-
-        <Button Text="Back"   
-               FontSize="15" 
-               AbsoluteLayout.LayoutFlags="PositionProportional"
-               AbsoluteLayout.LayoutBounds="1, 0, 80, 40"
-               Command="{Binding GoBackCommand}"
-         />
+        <!-- Register password -->
+        <StackLayout x:Name="registerForm" IsVisible="{Binding IsRegistering}" Spacing="20">
+            <Label Text="Set your Password" FontSize="30" HorizontalOptions="Center"/>
+            <Entry Placeholder="old Password" IsPassword="True" IsVisible="{Binding HasPassword}" Text="{Binding Password}"/>
+            <Entry Placeholder="new Password" IsPassword="True" Text="{Binding NewPassword}"/>
+            <Entry Placeholder="Repeat Password" IsPassword="True" Text="{Binding RepeatPassword}"/>
+            
+            <Label Text="Register">
+                <Label.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding SwitchCommand}" />
+                </Label.GestureRecognizers>
+            </Label>
+            <Label Text="{Binding ErrorMessage}" TextColor="Red"/>
+            
+            <Button Text="Register" Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:LockerViewModel}}, Path=SubmitCommand}" CommandParameter="{Binding .}"  />
+            <Button Text="Back"   
+                    FontSize="15" 
+                    AbsoluteLayout.LayoutFlags="PositionProportional"
+                    AbsoluteLayout.LayoutBounds="1, 0, 80, 40"
+                    Command="{Binding GoBackCommand}"/>
+        </StackLayout>
     </VerticalStackLayout>
 </ContentPage>
