@@ -17,9 +17,9 @@ namespace TaskManager.ViewModel
             _taskService=taskService;
             if (!_Unlock){ // first lock
                 //load password TODO
-                _Password = "111";
                 _Unlock =true;
-                Shell.Current.Navigation.PushAsync(new LockerPage(new LockerViewModel()));
+                //_Password = "111";
+                //Shell.Current.Navigation.PushAsync(new LockerPage(new LockerViewModel()));
             } 
         }
 

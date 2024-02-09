@@ -7,8 +7,6 @@ using TaskManager.Models;
 namespace TaskManager.ViewModel {
     public partial class LockerViewModel : ObservableObject
     {
-        private MainViewModel mainViewModel;
-        private LockerViewModel mainViewModel2;
         private bool _isLocked;
         private bool _isRegistering;
         private static string _Password; //local input password (could be wrong)
@@ -24,15 +22,6 @@ namespace TaskManager.ViewModel {
             {
                 _isRegistering = true;
             }
-            _errorMessage = "temp. password = " + "' " + MainViewModel._Password + " '";
-            //InitializePassword();
-            //_passService = new PasswordService();
-        }
-
-        // Async method to initialize Password property
-        private async Task InitializePassword()
-        {
-            //_Password = await _passService.GetPassword();
         }
 
         public bool HasPassword
@@ -111,7 +100,6 @@ namespace TaskManager.ViewModel {
         {
             TaskService taskService = new TaskService();
             var mainViewModel = new MainViewModel(taskService);
-
             await Shell.Current.Navigation.PushAsync(new MainPage(mainViewModel));
         }
         [ICommand]
@@ -148,10 +136,10 @@ namespace TaskManager.ViewModel {
                     {
                         return "Incorrect old password.";
                     }
-                    else
-                    {
-                        return "Incorrect password." + _Password + "!= "+ MainViewModel._Password;
-                    }
+                    //else
+                    //{
+                    //    return "Incorrect password." + _Password + "!= "+ MainViewModel._Password;
+                    //}
                 }
             }
             if (_isRegistering) { 
