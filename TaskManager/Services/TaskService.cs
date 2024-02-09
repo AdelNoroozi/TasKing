@@ -5,6 +5,7 @@ namespace TaskManager.Services
 {
     public class TaskService : ITaskService
     {
+
         private SQLiteAsyncConnection _dbConnection;
 
         private async Task SetUpDb()
@@ -55,7 +56,7 @@ namespace TaskManager.Services
                 return await _dbConnection.UpdateAsync(taskToUpdate);
             }
 
-            return 0; // Task not found
+            return 0;
         }
     }
 }

@@ -1,36 +1,43 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-
 using TaskManager.Services;
 using TaskManager.Views;
+using TaskManager.Models;
+
 namespace TaskManager.ViewModel {
     public partial class LockerViewModel : ObservableObject
     {
         private MainViewModel mainViewModel;
         private LockerViewModel mainViewModel2;
-        private bool _hasPassword;
         private bool _isLocked;
         private bool _isRegistering;
-        private string _Password;
+        private static string _Password; //local input password (could be wrong)
         private string _newPassword;
         private string _repeatPassword;
         private string _errorMessage;
-
+        private PasswordService _passService;
         public LockerViewModel()
         {
-            _isRegistering = true;
-            _hasPassword = true;
-            _isLocked = false;
+            _isRegistering = MainViewModel._isRegistering;
+
+            if (MainViewModel._Password == null)
+            {
+                _isRegistering = true;
+            }
+            _errorMessage = "temp. password = " + "' " + MainViewModel._Password + " '";
+            //InitializePassword();
+            //_passService = new PasswordService();
+        }
+
+        // Async method to initialize Password property
+        private async Task InitializePassword()
+        {
+            //_Password = await _passService.GetPassword();
         }
 
         public bool HasPassword
         {
-            get => _hasPassword;
-            set
-            {
-                _hasPassword = value;
-                OnPropertyChanged();
-            }
+            get => MainViewModel._Password != null;
         }
 
         public bool IsLocked
@@ -51,8 +58,8 @@ namespace TaskManager.ViewModel {
                 if (_isRegistering != value)
                 {
                     _isRegistering = value;
-                    OnPropertyChanged(); // Notify the UI of property change
-                    OnPropertyChanged(nameof(IsLoggingIn)); // Update dependent property
+                    OnPropertyChanged();
+                    OnPropertyChanged(nameof(IsLoggingIn));
                 }
             }
         }
@@ -104,16 +111,25 @@ namespace TaskManager.ViewModel {
         {
             TaskService taskService = new TaskService();
             var mainViewModel = new MainViewModel(taskService);
+
             await Shell.Current.Navigation.PushAsync(new MainPage(mainViewModel));
         }
         [ICommand]
         private async void Submit()
         {
             string errorMessage = ValidateForm();
-
             if (string.IsNullOrEmpty(errorMessage))
             {
-                UpdatePassword();
+                if (_isRegistering)
+                {
+                    UpdatePassword();
+                }
+                if (_Password != null)
+                {
+                    MainViewModel._hasPassword = true;
+                    MainViewModel._isRegistering = false;
+                }
+                Password = "";
                 GoBack();
             }
             else
@@ -126,7 +142,7 @@ namespace TaskManager.ViewModel {
         {
             if (HasPassword)
             {
-                if (Password != "1111")
+                if (_Password != MainViewModel._Password)
                 {
                     if (IsRegistering)
                     {
@@ -134,36 +150,33 @@ namespace TaskManager.ViewModel {
                     }
                     else
                     {
-                        return "Incorrect password.";
+                        return "Incorrect password." + _Password + "!= "+ MainViewModel._Password;
                     }
                 }
             }
-
-            if (NewPassword != RepeatPassword)
-            {
-                return "Passwords do not match.";
+            if (_isRegistering) { 
+                if (NewPassword != RepeatPassword)
+                {
+                    return "Passwords do not match.";
+                }
             }
-
             return string.Empty;
         }
-
+        //private async void UpdatePassword()
+        //{
+        //    PasswordModel newPasswordModel = new PasswordModel { Password = _newPassword };
+        //    await _passService.SavePassword(newPasswordModel);
+        //}
         private void UpdatePassword()
         {
-
+            MainViewModel._Password = NewPassword;
         }
-
         [ICommand]
-        private async void Switch()
+        private void Switch()
         {
-            _isRegistering = !_isRegistering;
-            ErrorMessage = IsLoggingIn.ToString();
-
-            await Shell.Current.Navigation.PushAsync(new LockerPage(new LockerViewModel()));
-
-
-
+            MainViewModel._isRegistering = !MainViewModel._isRegistering;
+            Password = "";
+            Shell.Current.Navigation.PushAsync(new LockerPage(new LockerViewModel()));
         }
-
-
     }
 }

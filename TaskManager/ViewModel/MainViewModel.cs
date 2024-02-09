@@ -15,11 +15,21 @@ namespace TaskManager.ViewModel
         public MainViewModel(ITaskService taskService)
         {
             _taskService=taskService;
+            if (!_Unlock){ // first lock
+                //load password TODO
+                _Password = "111";
+                _Unlock =true;
+                Shell.Current.Navigation.PushAsync(new LockerPage(new LockerViewModel()));
+            } 
         }
+
         [ObservableProperty]
         private bool isLoading;
-  
-        
+        public static string _Password;
+        public static bool _Unlock;
+        public static bool _isRegistering;
+        public static bool _hasPassword;
+
         [ICommand]
         public async void GetTaskList()
         {    
