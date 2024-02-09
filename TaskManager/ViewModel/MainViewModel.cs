@@ -66,7 +66,6 @@ namespace TaskManager.ViewModel
                 // var taskList = await _taskService.DeleteTask(task);
                 await _taskService.MakeTaskVisibleOrInvisible(task.TaskId, false);
                 Tasks.Remove(task);
-                Tasks.Add(task);
             }
 
         }

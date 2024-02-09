@@ -43,6 +43,32 @@ public partial class FilterViewModel : ObservableObject
     }
 
     [ICommand]
+    async void MoveToRecycleBin(TaskModel task)
+    {
+        if (FilteredTasks.Contains(task))
+        {
+            await _taskService.MakeTaskVisibleOrInvisible(task.TaskId, false);
+            FilteredTasks.Remove(task);
+        }
+
+    }
+
+    [ICommand]
+    async Task Tap(TaskModel task)
+    {
+        var currentPage = App.Current.MainPage;
+
+        var navParam = new Dictionary<string, object>();
+        navParam.Add("TaskDetail", task);
+
+        var detailViewModel = new DetailViewModel();
+
+        detailViewModel.TaskDetail = task;
+
+        await Application.Current.MainPage.Navigation.PushModalAsync(new DetailPage(detailViewModel));
+    }
+
+    [ICommand]
     public async void GoBack()
     {
         TaskService taskService = new TaskService();

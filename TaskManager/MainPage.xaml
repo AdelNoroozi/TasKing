@@ -66,7 +66,6 @@
                                         </Grid.ColumnDefinitions>
 
                                         <Label Grid.Row="0" Grid.Column="0" Text="{Binding Title}" FontSize="24" TextColor="#ffffff"/>
-                                        <ImageButton HeightRequest="50" WidthRequest="50" Grid.Row="0" Grid.Column="3" Source="Recycle_bin_icon.png" CornerRadius="0" Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:MainViewModel}}, Path=MoveToRecycleBinCommand}" CommandParameter="{Binding .}" VerticalOptions="Center"/>
                                         <Grid Grid.Column="1" Grid.Row="0" ColumnSpacing="5">
                                             <Grid.RowDefinitions>
                                                 <RowDefinition Height="*"></RowDefinition>
@@ -78,7 +77,21 @@
                                             <Label Text="Status:" FontSize="20" Grid.Column="0" Grid.Row="0" VerticalOptions="Center" HorizontalOptions="Center"></Label>
                                             <Label Text="{Binding Status}" FontSize="20" Grid.Column="1" Grid.Row="0" VerticalOptions="Center" HorizontalOptions="Center"></Label>
                                         </Grid>
-                                        <ImageButton HeightRequest="50" WidthRequest="50" Grid.Row="0" Grid.Column="2" Source="change_status_icon.png" CornerRadius="0" Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:MainViewModel}}, Path=ChangeStatusCommand}" CommandParameter="{Binding .}" />
+                                        <VerticalStackLayout Grid.Row="0" Grid.Column="2" WidthRequest="50" HeightRequest="50">
+                                            <Image Source="change_status_icon.png" VerticalOptions="Center" HorizontalOptions="Center">
+                                                <Image.GestureRecognizers>
+                                                    <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:MainViewModel}}, Path=ChangeStatusCommand}" CommandParameter="{Binding .}" />
+                                                </Image.GestureRecognizers>
+                                            </Image>
+                                        </VerticalStackLayout>
+
+                                        <VerticalStackLayout Grid.Row="0" Grid.Column="3" WidthRequest="50" HeightRequest="50">
+                                            <Image Source="Recycle_bin_icon.png" VerticalOptions="Center" HorizontalOptions="Center">
+                                                <Image.GestureRecognizers>
+                                                    <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:MainViewModel}}, Path=MoveToRecycleBinCommand}" CommandParameter="{Binding .}" />
+                                                </Image.GestureRecognizers>
+                                            </Image>
+                                        </VerticalStackLayout>
                                         <Button Grid.Column="4" Text="detail" WidthRequest="100" HeightRequest="50" Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:MainViewModel}}, Path=TapCommand}" CommandParameter="{Binding .}"></Button>
 
                                     </Grid>

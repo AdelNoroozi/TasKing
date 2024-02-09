@@ -16,30 +16,41 @@
 
         <Label FontSize="36" TextColor="#ffffff" VerticalOptions="Center" HorizontalOptions="CenterAndExpand">Recycle Bin</Label>
 
-        <StackLayout Grid.Row="1" Padding="20" Spacing="15">
-
-
-            <CollectionView ItemsSource="{Binding DeletedTasks}" SelectionMode="None" BackgroundColor="Transparent">
-                <CollectionView.ItemTemplate>
-                    <DataTemplate x:DataType="models:TaskModel">
-               
+        <ScrollView Grid.Row="1">
+            <StackLayout Padding="20" Spacing="15">
+                <CollectionView ItemsSource="{Binding DeletedTasks}" SelectionMode="None" BackgroundColor="Transparent">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="models:TaskModel">
                             <Frame Padding="15" BackgroundColor="#2c2c2c" CornerRadius="0" HasShadow="True">
                                 <Grid RowDefinitions="Auto" ColumnDefinitions="*,Auto,Auto" ColumnSpacing="10" >
                                     <Label Grid.Row="0" Grid.Column="0" Text="{Binding Title}" FontSize="24" TextColor="#ffffff"/>
-                                <ImageButton Grid.Row="0" WidthRequest="50" HeightRequest="50" Grid.Column="1" Source="delete_icon.png" Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:RecycleBinViewModel}}, Path=DeleteCommand}" CommandParameter="{Binding .}" />
-                                <ImageButton Grid.Row="0" WidthRequest="50" HeightRequest="50" Grid.Column="2" Source="restore_icon.png" Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:RecycleBinViewModel}}, Path=RestoreCommand}" CommandParameter="{Binding .}" />
-                            </Grid>
+                                    <VerticalStackLayout Grid.Row="0" Grid.Column="1" WidthRequest="50" HeightRequest="50">
+                                        <Image Source="delete_icon.png" VerticalOptions="Center" HorizontalOptions="Center">
+                                            <Image.GestureRecognizers>
+                                                <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:RecycleBinViewModel}}, Path=DeleteCommand}" CommandParameter="{Binding .}" />
+                                            </Image.GestureRecognizers>
+                                        </Image>
+                                    </VerticalStackLayout>
+
+                                    <VerticalStackLayout Grid.Row="0" Grid.Column="2" WidthRequest="50" HeightRequest="50">
+                                        <Image Source="restore_icon.png" VerticalOptions="Center" HorizontalOptions="Center">
+                                            <Image.GestureRecognizers>
+                                                <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:RecycleBinViewModel}}, Path=RestoreCommand}" CommandParameter="{Binding .}" />
+                                            </Image.GestureRecognizers>
+                                        </Image>
+                                    </VerticalStackLayout>
+                                </Grid>
                             </Frame>
-                    
-                    </DataTemplate>
-                </CollectionView.ItemTemplate>
-            </CollectionView>
-            <Button Text="Back"   
-               FontSize="15" 
-               AbsoluteLayout.LayoutFlags="PositionProportional"
-               AbsoluteLayout.LayoutBounds="1, 0, 80, 40"
-               Command="{Binding GoBackCommand}"
-               />
-        </StackLayout>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+                <Button Text="Back"   
+                    FontSize="15" 
+                    AbsoluteLayout.LayoutFlags="PositionProportional"
+                    AbsoluteLayout.LayoutBounds="1, 0, 80, 40"
+                    Command="{Binding GoBackCommand}"
+                />
+            </StackLayout>
+        </ScrollView>
     </Grid>
 </ContentPage>

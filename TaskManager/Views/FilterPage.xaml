@@ -25,8 +25,16 @@
                     <DataTemplate x:DataType="models:TaskModel">
 
                         <Frame Padding="15" BackgroundColor="#2c2c2c" CornerRadius="0" HasShadow="True">
-                            <Grid RowDefinitions="Auto" ColumnDefinitions="*,Auto,Auto" ColumnSpacing="10" >
+                            <Grid RowDefinitions="Auto" ColumnDefinitions="*,Auto,Auto,Auto,Auto" ColumnSpacing="10" >
                                 <Label Grid.Row="0" Grid.Column="0" Text="{Binding Title}" FontSize="24" TextColor="#ffffff"/>
+                                <VerticalStackLayout Grid.Row="0" Grid.Column="3" WidthRequest="50" HeightRequest="50">
+                                    <Image Source="Recycle_bin_icon.png" VerticalOptions="Center" HorizontalOptions="Center">
+                                        <Image.GestureRecognizers>
+                                            <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:FilterViewModel}}, Path=MoveToRecycleBinCommand}" CommandParameter="{Binding .}" />
+                                        </Image.GestureRecognizers>
+                                    </Image>
+                                </VerticalStackLayout>
+                                <Button Grid.Column="4" Text="detail" WidthRequest="100" HeightRequest="50" Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:FilterViewModel}}, Path=TapCommand}" CommandParameter="{Binding .}"></Button>
                             </Grid>
                         </Frame>
 
