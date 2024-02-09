@@ -1,5 +1,6 @@
 ﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using TaskManager.Models;
@@ -65,8 +66,54 @@ namespace TaskManager.ViewModel
                 // var taskList = await _taskService.DeleteTask(task);
                 await _taskService.MakeTaskVisibleOrInvisible(task.TaskId, false);
                 Tasks.Remove(task);
+                Tasks.Add(task);
             }
 
+        }
+
+        [ICommand]
+        async void ToDoFilter()
+        {
+            var currentPage = App.Current.MainPage;
+
+            var navParam = new Dictionary<string, string>();
+            navParam.Add("Status", "To Do");
+            TaskService taskService = new TaskService();
+            var filterViewModel = new FilterViewModel(taskService);
+
+            filterViewModel.Status = "To Do";
+
+            await Application.Current.MainPage.Navigation.PushModalAsync(new FilterPage(filterViewModel));
+        }
+
+        [ICommand]
+        async void InProgressFilter()
+        {
+            var currentPage = App.Current.MainPage;
+
+            var navParam = new Dictionary<string, string>();
+            navParam.Add("Status", "In Progress");
+            TaskService taskService = new TaskService();
+            var filterViewModel = new FilterViewModel(taskService);
+
+            filterViewModel.Status = "In Progress";
+
+            await Application.Current.MainPage.Navigation.PushModalAsync(new FilterPage(filterViewModel));
+        }
+
+        [ICommand]
+        async void DoneFilter()
+        {
+            var currentPage = App.Current.MainPage;
+
+            var navParam = new Dictionary<string, string>();
+            navParam.Add("Status", "Done");
+            TaskService taskService = new TaskService();
+            var filterViewModel = new FilterViewModel(taskService);
+
+            filterViewModel.Status = "Done";
+
+            await Application.Current.MainPage.Navigation.PushModalAsync(new FilterPage(filterViewModel));
         }
 
         [ICommand]
@@ -107,20 +154,15 @@ namespace TaskManager.ViewModel
         [ICommand]
         async Task Tap(TaskModel task)
         {
-            // Assuming you have a reference to the current Page or Navigation instance
-            // If not, you may need to pass it to the ViewModel or find another way to obtain it.
-            var currentPage = App.Current.MainPage; // Change this to get the current Page instance
+            var currentPage = App.Current.MainPage; 
 
             var navParam = new Dictionary<string, object>();
             navParam.Add("TaskDetail", task);
 
-            // Create an instance of DetailViewModel
             var detailViewModel = new DetailViewModel();
 
-            // Set the property directly in the DetailViewModel
             detailViewModel.TaskDetail = task;
 
-            // Use PushModalAsync instead of GoToAsync
             await Application.Current.MainPage.Navigation.PushModalAsync(new DetailPage(detailViewModel));
         }
     }

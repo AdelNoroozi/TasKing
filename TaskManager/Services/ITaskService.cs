@@ -10,6 +10,7 @@ namespace TaskManager.Services
         Task<int> DeleteTask(TaskModel task);
         Task<int> MakeTaskVisibleOrInvisible(int taskId, bool isVisible);
         Task<int> UpdateTaskStatus(int taskId, string newStatus);
+        Task<List<TaskModel>> GetTasksByStatus(string status);
 
     }
 }

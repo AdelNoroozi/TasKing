@@ -58,6 +58,14 @@ namespace TaskManager.Services
             return 0; // Task not found
         }
 
+        public async Task<List<TaskModel>> GetTasksByStatus(string status)
+        {
+            await SetUpDb();
+            var tasksByStatus = await _dbConnection.Table<TaskModel>().Where(t => t.Status == status && t.IsVisible).ToListAsync();
+            return tasksByStatus;
+        }
+
+
         public async Task<int> UpdateTaskStatus(int taskId, string newStatus)
         {
             await SetUpDb();
