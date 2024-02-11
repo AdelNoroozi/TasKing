@@ -1,5 +1,4 @@
 ﻿using TaskManager.ViewModel;
-
 namespace TaskManager
 {
     public partial class MainPage : ContentPage
@@ -11,7 +10,7 @@ namespace TaskManager
             viewModel = vm;
             this.BindingContext = vm;
         }
-        protected override void OnAppearing()
+        protected async override void OnAppearing()
         {
             base.OnAppearing();
             viewModel.GetTaskListCommand.Execute(null);

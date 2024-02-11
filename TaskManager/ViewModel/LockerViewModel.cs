@@ -7,6 +7,7 @@ using TaskManager.Models;
 namespace TaskManager.ViewModel {
     public partial class LockerViewModel : ObservableObject
     {
+        public string firstRunPass;
         private bool _isLocked;
         private bool _isRegistering;
         private static string _Password; //local input password (could be wrong)
@@ -22,6 +23,20 @@ namespace TaskManager.ViewModel {
             {
                 _isRegistering = true;
             }
+            _errorMessage = "password = " + MainViewModel._Password;
+        }
+
+        [ICommand]
+        public async void LoadPassword()
+        {
+            var _passService = new PasswordService();
+            firstRunPass = await _passService.GetPassword();
+            if (firstRunPass != null) {
+                MainViewModel._hasPassword = true;
+            }
+            await Task.Delay(1);
+
+
         }
 
         public bool HasPassword
@@ -115,7 +130,7 @@ namespace TaskManager.ViewModel {
             {
                 if (_isRegistering)
                 {
-                    UpdatePassword();
+                    await UpdatePassword();
                 }
                 if (_newPassword != null)
                 {
@@ -155,14 +170,12 @@ namespace TaskManager.ViewModel {
             }
             return string.Empty;
         }
-        //private async void UpdatePassword()
-        //{
-        //    PasswordModel newPasswordModel = new PasswordModel { Password = _newPassword };
-        //    await _passService.SavePassword(newPasswordModel);
-        //}
-        private void UpdatePassword()
+        private async Task UpdatePassword()
         {
+            _passService = new PasswordService();
+            await _passService.SetPassword(NewPassword);
             MainViewModel._Password = NewPassword;
+
         }
         [ICommand]
         private void Switch()

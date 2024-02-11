@@ -19,9 +19,16 @@ namespace TaskManager.ViewModel
             _taskService=taskService;
             if (!_Unlock){ // first lock
                 //load password TODO
-                _Unlock =true;
-                _Password = "111";
-                Shell.Current.Navigation.PushAsync(new LockerPage(new LockerViewModel()));
+                _Unlock = true;
+                _isRegistering = false;
+                _hasPassword = true;
+                var lockerViewModel = new LockerViewModel();
+                lockerViewModel.IsRegistering = false;
+
+                _Password = lockerViewModel.firstRunPass;
+                Shell.Current.Navigation.PushAsync(new LockerPage(lockerViewModel));
+                
+                _UnlockEnded = true;
             } 
         }
 
@@ -29,6 +36,7 @@ namespace TaskManager.ViewModel
         private bool isLoading;
         public static string _Password;
         public static bool _Unlock;
+        public static bool _UnlockEnded;
         public static bool _isRegistering;
         public static bool _hasPassword;
         
