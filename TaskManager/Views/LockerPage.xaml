@@ -30,15 +30,24 @@
             <Entry Placeholder="old Password" IsPassword="True" IsVisible="{Binding HasPassword}" Text="{Binding Password}"/>
             <Entry Placeholder="new Password" IsPassword="True" Text="{Binding NewPassword}"/>
             <Entry Placeholder="Repeat Password" IsPassword="True" Text="{Binding RepeatPassword}"/>
+            
+            <StackLayout IsVisible="{Binding HasPassword}">
+                <Label Text="Back to login">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding SwitchCommand}" />
+                    </Label.GestureRecognizers>
+                </Label>
+            </StackLayout>
 
             <Label Text="{Binding ErrorMessage}" TextColor="Red"/>
-            
             <Button Text="Submit" Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:LockerViewModel}}, Path=SubmitCommand}" CommandParameter="{Binding .}"  />
-            <Button Text="Back"   
+            <StackLayout IsVisible="{Binding NoPassword}">
+                <Button Text="Back"   
                     FontSize="15" 
                     AbsoluteLayout.LayoutFlags="PositionProportional"
                     AbsoluteLayout.LayoutBounds="1, 0, 80, 40"
-                    Command="{Binding SwitchCommand}"/>
-        </StackLayout>
+                    Command="{Binding GoBackCommand}"/>
+            </StackLayout>
+        </StackLayout >
     </VerticalStackLayout>
 </ContentPage>

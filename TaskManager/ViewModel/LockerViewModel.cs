@@ -29,6 +29,11 @@ namespace TaskManager.ViewModel {
             get => MainViewModel._Password != null;
         }
 
+        public bool NoPassword
+        {
+            get => MainViewModel._Password == null;
+        }
+
         public bool IsLocked
         {
             get => _isLocked;
@@ -138,7 +143,7 @@ namespace TaskManager.ViewModel {
                     }
                     else
                     {
-                        return "Incorrect password." + _Password + "!= "+ MainViewModel._Password;
+                        return "Incorrect password.";// + _Password + "!= "+ MainViewModel._Password;
                     }
                 }
             }
