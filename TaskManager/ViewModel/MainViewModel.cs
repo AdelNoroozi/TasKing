@@ -1,4 +1,6 @@
 ﻿using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using TaskManager.Models;
@@ -9,7 +11,7 @@ namespace TaskManager.ViewModel
 {
     public partial class MainViewModel : ObservableObject
     {
-        public ObservableCollection<TaskModel> Tasks { get; set; }=new ObservableCollection<TaskModel>();
+        public ObservableCollection<TaskModel> Tasks { get; set; } = new ObservableCollection<TaskModel>();
 
         private readonly ITaskService _taskService;
         public MainViewModel(ITaskService taskService)
@@ -29,10 +31,24 @@ namespace TaskManager.ViewModel
         public static bool _Unlock;
         public static bool _isRegistering;
         public static bool _hasPassword;
+            _taskService = taskService;
+        }
+
+        private TaskStatus _selectedStatus;
+        public TaskStatus SelectedStatus
+        {
+            get { return _selectedStatus; }
+            set
+            {
+            }
+        }
+
+        [ObservableProperty]
+        private bool isLoading;
 
         [ICommand]
         public async void GetTaskList()
-        {    
+        {
             IsLoading = true;
 
             Tasks.Clear();
@@ -46,10 +62,10 @@ namespace TaskManager.ViewModel
                 }
             }
             IsLoading = false;
-            
+
         }
 
-      
+
         [ICommand]
         public async void Add()
         {
@@ -65,8 +81,82 @@ namespace TaskManager.ViewModel
                 await _taskService.MakeTaskVisibleOrInvisible(task.TaskId, false);
                 Tasks.Remove(task);
             }
-           
-        }      
+
+        }
+
+        [ICommand]
+        async void ToDoFilter()
+        {
+            var currentPage = App.Current.MainPage;
+
+            var navParam = new Dictionary<string, string>();
+            navParam.Add("Status", "To Do");
+            TaskService taskService = new TaskService();
+            var filterViewModel = new FilterViewModel(taskService);
+
+            filterViewModel.Status = "To Do";
+
+            await Application.Current.MainPage.Navigation.PushModalAsync(new FilterPage(filterViewModel));
+        }
+
+        [ICommand]
+        async void InProgressFilter()
+        {
+            var currentPage = App.Current.MainPage;
+
+            var navParam = new Dictionary<string, string>();
+            navParam.Add("Status", "In Progress");
+            TaskService taskService = new TaskService();
+            var filterViewModel = new FilterViewModel(taskService);
+
+            filterViewModel.Status = "In Progress";
+
+            await Application.Current.MainPage.Navigation.PushModalAsync(new FilterPage(filterViewModel));
+        }
+
+        [ICommand]
+        async void DoneFilter()
+        {
+            var currentPage = App.Current.MainPage;
+
+            var navParam = new Dictionary<string, string>();
+            navParam.Add("Status", "Done");
+            TaskService taskService = new TaskService();
+            var filterViewModel = new FilterViewModel(taskService);
+
+            filterViewModel.Status = "Done";
+
+            await Application.Current.MainPage.Navigation.PushModalAsync(new FilterPage(filterViewModel));
+        }
+
+        [ICommand]
+        async void ChangeStatus(TaskModel task)
+        {
+            if (Tasks.Contains(task))
+            {
+                string currentStatus = task.Status;
+
+                switch (currentStatus)
+                {
+                    case "To Do":
+                        await _taskService.UpdateTaskStatus(task.TaskId, "In Progress");
+                        break;
+
+                    case "In Progress":
+                        await _taskService.UpdateTaskStatus(task.TaskId, "Done");
+                        break;
+
+                    case "Done":
+                        await _taskService.UpdateTaskStatus(task.TaskId, "To Do");
+                        break;
+                }
+                TaskService taskService = new TaskService();
+                var mainViewModel = new MainViewModel(taskService);
+                await Shell.Current.Navigation.PushAsync(new MainPage(mainViewModel));
+            }
+        }
+
+
         [ICommand]
         async void GoToRecycleBin()
         {
@@ -80,24 +170,18 @@ namespace TaskManager.ViewModel
 
         }
 
-
         [ICommand]
         async Task Tap(TaskModel task)
         {
-            // Assuming you have a reference to the current Page or Navigation instance
-            // If not, you may need to pass it to the ViewModel or find another way to obtain it.
-            var currentPage = App.Current.MainPage; // Change this to get the current Page instance
+            var currentPage = App.Current.MainPage; 
 
             var navParam = new Dictionary<string, object>();
             navParam.Add("TaskDetail", task);
 
-            // Create an instance of DetailViewModel
             var detailViewModel = new DetailViewModel();
 
-            // Set the property directly in the DetailViewModel
             detailViewModel.TaskDetail = task;
 
-            // Use PushModalAsync instead of GoToAsync
             await Application.Current.MainPage.Navigation.PushModalAsync(new DetailPage(detailViewModel));
         }
     }

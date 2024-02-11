@@ -58,5 +58,28 @@ namespace TaskManager.Services
 
             return 0;
         }
+
+        public async Task<List<TaskModel>> GetTasksByStatus(string status)
+        {
+            await SetUpDb();
+            var tasksByStatus = await _dbConnection.Table<TaskModel>().Where(t => t.Status == status && t.IsVisible).ToListAsync();
+            return tasksByStatus;
+        }
+
+
+        public async Task<int> UpdateTaskStatus(int taskId, string newStatus)
+        {
+            await SetUpDb();
+            var taskToUpdate = await _dbConnection.Table<TaskModel>().Where(t => t.TaskId == taskId).FirstOrDefaultAsync();
+
+            if (taskToUpdate != null)
+            {
+                taskToUpdate.Status = newStatus;
+                return await _dbConnection.UpdateAsync(taskToUpdate);
+            }
+
+            return 0; // Task not found
+        }
+
     }
 }

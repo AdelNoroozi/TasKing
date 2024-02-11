@@ -16,5 +16,6 @@ namespace TaskManager
             base.OnAppearing();
             viewModel.GetTaskListCommand.Execute(null);
         }
+
     }
 }
