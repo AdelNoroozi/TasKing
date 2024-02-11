@@ -16,6 +16,21 @@ namespace TaskManager.ViewModel
         private readonly ITaskService _taskService;
         public MainViewModel(ITaskService taskService)
         {
+            _taskService=taskService;
+            if (!_Unlock){ // first lock
+                //load password TODO
+                _Unlock =true;
+                //_Password = "111";
+                //Shell.Current.Navigation.PushAsync(new LockerPage(new LockerViewModel()));
+            } 
+        }
+
+        [ObservableProperty]
+        private bool isLoading;
+        public static string _Password;
+        public static bool _Unlock;
+        public static bool _isRegistering;
+        public static bool _hasPassword;
             _taskService = taskService;
         }
 
@@ -30,7 +45,6 @@ namespace TaskManager.ViewModel
 
         [ObservableProperty]
         private bool isLoading;
-
 
         [ICommand]
         public async void GetTaskList()
@@ -147,6 +161,12 @@ namespace TaskManager.ViewModel
         async void GoToRecycleBin()
         {
             await Shell.Current.GoToAsync($"{nameof(RecycleBinPage)}");
+
+        }
+        [ICommand]
+        async void GoToLocker()
+        {
+            await Shell.Current.GoToAsync($"{nameof(LockerPage)}");
 
         }
 

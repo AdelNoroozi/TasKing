@@ -27,7 +27,20 @@
 
         <Label FontSize="36" TextColor="#ffffff" VerticalOptions="Center" HorizontalOptions="CenterAndExpand">TasKing</Label>
 
-        <Button Grid.Row="0"
+        <HorizontalStackLayout Grid.Row="0" HorizontalOptions="End" Spacing="50">
+            <ImageButton
+                Source="lock.png"
+                Grid.Row="0"
+                HorizontalOptions="End"
+                MaximumHeightRequest="80"
+                MaximumWidthRequest="80"
+                Background="Transparent "
+                Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:MainViewModel}}, Path=GoToLockerCommand}"
+            />
+
+
+              <Button Grid.Row="0"
+
                 Text="Add New"
                 BackgroundColor="#3498db"
                 TextColor="#ffffff"

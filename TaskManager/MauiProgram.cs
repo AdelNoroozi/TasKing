@@ -37,6 +37,9 @@ namespace TaskManager
             builder.Services.AddTransient<FilterPage>();
             builder.Services.AddTransient<FilterViewModel>();
 
+            builder.Services.AddTransient<LockerPage>();
+            builder.Services.AddTransient<LockerViewModel>();
+
             builder.Services.AddSingleton<ITaskService, TaskService>();
 
             return builder.Build();
