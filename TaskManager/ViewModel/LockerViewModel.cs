@@ -136,10 +136,10 @@ namespace TaskManager.ViewModel {
                     {
                         return "Incorrect old password.";
                     }
-                    //else
-                    //{
-                    //    return "Incorrect password." + _Password + "!= "+ MainViewModel._Password;
-                    //}
+                    else
+                    {
+                        return "Incorrect password." + _Password + "!= "+ MainViewModel._Password;
+                    }
                 }
             }
             if (_isRegistering) { 

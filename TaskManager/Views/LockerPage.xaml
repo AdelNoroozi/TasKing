@@ -31,14 +31,6 @@
             <Entry Placeholder="new Password" IsPassword="True" Text="{Binding NewPassword}"/>
             <Entry Placeholder="Repeat Password" IsPassword="True" Text="{Binding RepeatPassword}"/>
 
-            <StackLayout IsVisible="{Binding HasPassword}">
-                <Label Text="Back to login">
-                    <Label.GestureRecognizers>
-                        <TapGestureRecognizer Command="{Binding SwitchCommand}" />
-                    </Label.GestureRecognizers>
-                </Label>
-            </StackLayout>
-
             <Label Text="{Binding ErrorMessage}" TextColor="Red"/>
             
             <Button Text="Submit" Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:LockerViewModel}}, Path=SubmitCommand}" CommandParameter="{Binding .}"  />
@@ -46,7 +38,7 @@
                     FontSize="15" 
                     AbsoluteLayout.LayoutFlags="PositionProportional"
                     AbsoluteLayout.LayoutBounds="1, 0, 80, 40"
-                    Command="{Binding GoBackCommand}"/>
+                    Command="{Binding SwitchCommand}"/>
         </StackLayout>
     </VerticalStackLayout>
 </ContentPage>
