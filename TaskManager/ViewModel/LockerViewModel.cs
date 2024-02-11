@@ -22,8 +22,8 @@ namespace TaskManager.ViewModel {
             if (MainViewModel._Password == null)
             {
                 _isRegistering = true;
+                _errorMessage = "if no password is set, just press unlock.";
             }
-            _errorMessage = "password = " + MainViewModel._Password;
         }
 
         [ICommand]
@@ -158,14 +158,20 @@ namespace TaskManager.ViewModel {
                     }
                     else
                     {
-                        return "Incorrect password.";// + _Password + "!= "+ MainViewModel._Password;
+                        return "Incorrect password.";
                     }
                 }
             }
+
+
             if (_isRegistering) { 
                 if (NewPassword != RepeatPassword)
                 {
                     return "Passwords do not match.";
+                }
+                if (string.IsNullOrEmpty(NewPassword))
+                {
+                    return "can't be empty";
                 }
             }
             return string.Empty;
