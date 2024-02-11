@@ -117,7 +117,7 @@ namespace TaskManager.ViewModel {
                 {
                     UpdatePassword();
                 }
-                if (_Password != null)
+                if (_newPassword != null)
                 {
                     MainViewModel._hasPassword = true;
                     MainViewModel._isRegistering = false;
