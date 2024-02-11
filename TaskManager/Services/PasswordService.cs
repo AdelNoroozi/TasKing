@@ -11,12 +11,14 @@ namespace TaskManager.Services
         public string Password { get; private set; }
         public async Task SetPassword(string password)
         {
+
             string targetFile = Path.Combine(FileSystem.AppDataDirectory, "password.txt");
-            using (FileStream outputStream = File.OpenWrite(targetFile))
+            using (FileStream outputStream = File.Open(targetFile, FileMode.Create, FileAccess.Write))
             using (StreamWriter streamWriter = new StreamWriter(outputStream))
             {
                 await streamWriter.WriteAsync(password);
             }
+
         }
 
         public async Task<string> GetPassword()
@@ -32,7 +34,7 @@ namespace TaskManager.Services
             }
             else
             {
-                return "";
+                return null;
             }
         }
     }

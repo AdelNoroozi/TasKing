@@ -23,7 +23,7 @@ namespace TaskManager.ViewModel {
             {
                 _isRegistering = true;
             }
-            //_errorMessage = "password = " + MainViewModel._Password;
+            _errorMessage = "password = " + MainViewModel._Password;
         }
 
         [ICommand]
