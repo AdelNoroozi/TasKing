@@ -20,8 +20,8 @@ namespace TaskManager.ViewModel
             if (!_Unlock){ // first lock
                 //load password TODO
                 _Unlock =true;
-                //_Password = "111";
-                //Shell.Current.Navigation.PushAsync(new LockerPage(new LockerViewModel()));
+                _Password = "111";
+                Shell.Current.Navigation.PushAsync(new LockerPage(new LockerViewModel()));
             } 
         }
 
@@ -31,8 +31,7 @@ namespace TaskManager.ViewModel
         public static bool _Unlock;
         public static bool _isRegistering;
         public static bool _hasPassword;
-            _taskService = taskService;
-        }
+        
 
         private TaskStatus _selectedStatus;
         public TaskStatus SelectedStatus
@@ -43,8 +42,6 @@ namespace TaskManager.ViewModel
             }
         }
 
-        [ObservableProperty]
-        private bool isLoading;
 
         [ICommand]
         public async void GetTaskList()

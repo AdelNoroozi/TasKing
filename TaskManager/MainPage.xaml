@@ -39,7 +39,7 @@
             />
 
 
-              <Button Grid.Row="0"
+            <Button Grid.Row="0"
 
                 Text="Add New"
                 BackgroundColor="#3498db"
@@ -48,6 +48,7 @@
                 Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:MainViewModel}}, Path=AddCommand}"
                 FontSize="18"
                 HorizontalOptions="End" />
+        </HorizontalStackLayout>
         <ScrollView Grid.Row="1">
             <StackLayout Grid.Row="1" Padding="20" Spacing="15">
 
